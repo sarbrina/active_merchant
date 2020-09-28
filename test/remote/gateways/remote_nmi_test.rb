@@ -104,6 +104,24 @@ class RemoteNmiTest < Test::Unit::TestCase
     assert response.authorization
   end
 
+  def test_successful_purchase_with_three_d_secure
+    three_d_secure_options = @options.merge({
+      three_d_secure: {
+        version: '2.1.0',
+        eci: '02',
+        cavv: 'cavv',
+        ds_transaction_id: 'trans_id',
+        xid: 'xid'
+      }
+    })
+
+    assert response = @gateway.purchase(@amount, @credit_card, three_d_secure_options)
+    assert_success response
+    assert response.test?
+    assert_equal 'Succeeded', response.message
+    assert response.authorization
+  end
+
   def test_successful_authorization
     options = @options.merge(@level3_options)
 
