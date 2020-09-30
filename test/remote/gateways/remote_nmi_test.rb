@@ -109,9 +109,8 @@ class RemoteNmiTest < Test::Unit::TestCase
       three_d_secure: {
         version: '2.1.0',
         eci: '02',
-        cavv: 'cavv',
-        ds_transaction_id: 'trans_id',
-        xid: 'xid'
+        cavv: 'jJ81HADVRtXfCBATEp01CJUAAAA',
+        ds_transaction_id: 'trans_id'
       }
     })
 
