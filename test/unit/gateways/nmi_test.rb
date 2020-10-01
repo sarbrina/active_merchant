@@ -118,7 +118,7 @@ class NmiTest < Test::Unit::TestCase
       assert_match(/three_ds_version=2.1.0/, data)
       assert_match(/eci=02/, data)
       assert_match(/cavv=jJ81HADVRtXfCBATEp01CJUAAAA/, data)
-      assert_match(/source_transaction_id=97267598-FAE6-48F2-8083-C23433990FBC/, data)
+      assert_match(/directory_server_id=97267598-FAE6-48F2-8083-C23433990FBC/, data)
       assert_match(/xid=00000000000000000501/, data)
     end.respond_with(successful_3ds_purchase_response)
 

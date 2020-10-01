@@ -258,7 +258,7 @@ module ActiveMerchant #:nodoc:
           post[:cavv] = three_d_secure[:cavv]
           post[:xid] = three_d_secure[:xid]
           post[:three_ds_version] = three_d_secure[:version]
-          post[:source_transaction_id] = three_d_secure[:ds_transaction_id]
+          post[:directory_server_id] = three_d_secure[:ds_transaction_id]
         end
       end
 

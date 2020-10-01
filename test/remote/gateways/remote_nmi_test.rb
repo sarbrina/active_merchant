@@ -110,7 +110,7 @@ class RemoteNmiTest < Test::Unit::TestCase
         version: '2.1.0',
         eci: '02',
         cavv: 'jJ81HADVRtXfCBATEp01CJUAAAA',
-        ds_transaction_id: 'trans_id'
+        ds_transaction_id: '97267598-FAE6-48F2-8083-C23433990FBC'
       }
     })
 
