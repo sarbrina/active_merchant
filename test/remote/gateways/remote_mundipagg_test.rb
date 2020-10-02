@@ -22,6 +22,32 @@ class RemoteMundipaggTest < Test::Unit::TestCase
       description: 'Store Purchase'
     }
 
+    @submerchant_options = {
+      SubMerchant: {
+        "Merchant_Category_Code": '44444',
+        "Payment_Facilitator_Code": '5555555',
+        "Code": 'code2',
+        "Name": 'Sub Tony Stark',
+        "Document": '123456789',
+        "Type": 'individual',
+        "Phone": {
+          "Country_Code": '55',
+          "Number": '000000000',
+          "Area_Code": '21'
+        },
+        "Address": {
+          "Street": 'Malibu Point',
+          "Number": '10880',
+          "Complement": 'A',
+          "Neighborhood": 'Central Malibu',
+          "City": 'Malibu',
+          "State": 'CA',
+          "Country": 'US',
+          "zip_code": '24210-460'
+        }
+      }
+    }
+
     @excess_length_neighborhood = address({neighborhood: 'Super Long Neighborhood Name' * 5})
     @neighborhood_length_error = 'Invalid parameters; The request is invalid. | The field neighborhood must be a string with a maximum length of 64.'
   end
@@ -67,6 +93,12 @@ class RemoteMundipaggTest < Test::Unit::TestCase
     assert_equal 'Simulator|Transação de simulação autorizada com sucesso', response.message
   end
 
+  def test_successful_purchase_with_submerchant
+    options = @options.update(@submerchant_options)
+    response = @gateway.purchase(@amount, @credit_card, options)
+    assert_success response
+  end
+
   def test_failed_purchase
     test_failed_purchase_with(@declined_card)
   end
@@ -90,6 +122,12 @@ class RemoteMundipaggTest < Test::Unit::TestCase
 
   def test_successful_authorize_and_capture_with_alelo_card
     test_successful_authorize_and_capture_with(@alelo_voucher)
+  end
+
+  def test_successful_authorize_with_submerchant
+    options = @options.update(@submerchant_options)
+    response = @gateway.authorize(@amount, @credit_card, options)
+    assert_success response
   end
 
   def test_failed_authorize

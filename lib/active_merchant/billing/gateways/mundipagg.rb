@@ -39,6 +39,7 @@ module ActiveMerchant #:nodoc:
         add_customer_data(post, options) unless payment.is_a?(String)
         add_shipping_address(post, options)
         add_payment(post, payment, options)
+        add_submerchant(post, options)
 
         commit('sale', post)
       end
@@ -50,6 +51,7 @@ module ActiveMerchant #:nodoc:
         add_shipping_address(post, options)
         add_payment(post, payment, options)
         add_capture_flag(post, payment)
+        add_submerchant(post, options)
         commit('authonly', post)
       end
 
@@ -200,6 +202,31 @@ module ActiveMerchant #:nodoc:
         return false if payment.is_a?(String)
 
         %w[sodexo vr].include? card_brand(payment)
+      end
+
+      def add_submerchant(post, options)
+        if submerchant = options[:submerchant]
+          post[:submerchant] = {}
+          post[:submerchant][:merchant_category_code] = submerchant[:merchant_category_code] if submerchant[:merchant_category_code]
+          post[:submerchant][:payment_facilitator_code] = submerchant[:payment_facilitator_code] if submerchant[:payment_facilitator_code]
+          post[:submerchant][:code] = submerchant[:code] if submerchant[:code]
+          post[:submerchant][:name] = submerchant[:name] if submerchant[:name]
+          post[:submerchant][:document] = submerchant[:document] if submerchant[:document]
+          post[:submerchant][:type] = submerchant[:type] if submerchant[:type]
+          post[:submerchant][:phone] = {}
+          post[:submerchant][:phone][:country_code] = submerchant[:phone][:country_code]
+          post[:submerchant][:phone][:number] = submerchant[:phone][:number]
+          post[:submerchant][:phone][:area_code] = submerchant[:phone][:area_code]
+          post[:submerchant][:address] = {}
+          post[:submerchant][:address][:street] = submerchant[:address][:street]
+          post[:submerchant][:address][:number] = submerchant[:address][:number]
+          post[:submerchant][:address][:complement] = submerchant[:address][:complement]
+          post[:submerchant][:address][:neighborhood] = submerchant[:address][:neighborhood]
+          post[:submerchant][:address][:city] = submerchant[:address][:city]
+          post[:submerchant][:address][:state] = submerchant[:address][:state]
+          post[:submerchant][:address][:country] = submerchant[:address][:country]
+          post[:submerchant][:address][:zip_code] = submerchant[:address][:zip_code]
+        end
       end
 
       def headers
